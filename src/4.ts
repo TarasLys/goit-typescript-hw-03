@@ -20,48 +20,37 @@
 // Наприклад, ось так:
 
 class Key {
-  private signature: number;
-  constructor() {
-    this.signature = Math.random();
-  }
+  private signature: number = Math.random();
+  
   public getSignature(): number {
     return this.signature;
   }
 }
 
 class Person {
-  private key: Key;
-  constructor(key: Key) {
-    this.key = key;
-  }
+  constructor(private key: Key) {}
   public getKey(): Key {
     return this.key;
   }
 }
 
 abstract class House {
-  protected door: boolean;
-  protected tenants: Person[];
-  protected key: Key;
-  constructor(key: Key) {
-    this.key = key;
-    this.door = false;
-    this.tenants = [];
-  }
+  protected door: boolean = false;;
+  protected tenants: Person[] = [];
+  constructor(protected key: Key) {}
+ 
   public comeIn(person: Person): void {
     if (this.door) {
       this.tenants.push(person);
     }
   }
-  public OpenDoor(key: Key): void {
+  public openDoor(key: Key): void {
     console.log("Open the door");
   }
 }
 
 class MyHouse extends House {
-  constructor(key: Key) {
-    super(key);
-  }
+  
   public openDoor(key: Key): void {
     if (key.getSignature() === this.key.getSignature()) {
       this.door = true;
